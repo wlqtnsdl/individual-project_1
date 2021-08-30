@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body {background-color: #eee6c4;}
+  #container {
+    background-color: #f5f5dc;
+    width: 950px;
+    height: 800px;
+    margin: 80px auto;
+    padding: 20px;
+    border-style: groove; } 
+  </style>
+  
+  <div id="container">
+
+    <p style="font-size: 40px; color: rgb(20, 22, 20); font-family: initial;">
+        <b><대한민국 테마별 숨은 명소찾기></b></p>
+
+        <style>
+            .searchBox {
+              margin: 20px 0;
+            }     
+            .listBox {
+              max-width: 500px;
+            }      
+            .listInner {
+              background-color: #dedede;
+              width: 810px;
+              margin: 10px 5px;
+              padding: 4px;
+            }     
+            .country {
+              font-weight: bold;
+            }     
+          </style>
+</head>   
+<body>
+    <p align="right"></p>
+<img src="테마여행.JPG" alt="대한민국 테마여행 10선" width="300" height="400" border="1" align="right"> 
+
+<h1>게시글작성</h1>
+
+<style>
+    table, th, td {
+      border: 1px solid #bcbcbc;
+    }
+    .jb-th-1 {
+      padding: 20px 30px;
+    }
+  </style>
+
+<table>
+  <tbody>
+  <tr>
+    <th>테마</th>
+    <td><input type="text" id="thema" name="thema"></td>
+  </tr>
+  <tr>
+    <th>위치</th>
+    <td><input type="text" id="location" name="location"></td>
+  </tr>
+  <tr>
+    <th>이름</th>
+    <td><input type="text" id="name" name="name"></td>
+  </tr>
+  <tr>
+    <th>명소가 된 이유</th>
+    <td>
+      <textarea type="text" id="substance" name="substance"></textarea>
+    </td>
+  </tr>
+</tbody></table>
+<div style="width:100%; text-align: left;">
+  <button onclick="window.history.back()">취소</button>
+  <button onclick="save()">저장</button>
+
+</div>
+
+
+<script>
+  function save() {
+    if (!confirm('저장하시겠습니까?')) {
+      return;
+    }
+    var contents;
+      try {
+        contents = JSON.parse(localStorage.getItem("contents"));
+      } catch (e) {
+        contents = null;
+      }
+
+    if (!contents) {
+      contents = [];
+    }
+
+    var thema = document.getElementById('thema').value;
+    var location = document.getElementById('location').value;
+    var name = document.getElementById('name').value;
+    var substance = document.getElementById('substance').value;
+    contents.push({no:contents.length+1
+      , thema:thema
+      , location:location
+      , name:name
+      , substance:substance
+      , write_date:new Date()});
+    localStorage.setItem("contents", JSON.stringify(contents));
+
+    alert('저장되었습니다.');
+    location.href = 'list.html';
+  }
+</script>
+</body></html>

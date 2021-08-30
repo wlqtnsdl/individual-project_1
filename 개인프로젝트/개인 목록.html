@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body {background-color: #eee6c4;}
+  #container {
+    background-color: #f5f5dc;
+    width: 950px;
+    height: 800px;
+    margin: 80px auto;
+    padding: 20px;
+    border-style: groove; } 
+  </style>
+  
+  <div id="container">
+
+    <p style="font-size: 40px; color: rgb(20, 22, 20); font-family: initial;">
+        <b><대한민국 테마별 숨은 명소찾기></b></p>
+
+        <style>
+            .searchBox {
+              margin: 20px 0;
+            }     
+            .listBox {
+              max-width: 500px;
+            }      
+            .listInner {
+              background-color: #dedede;
+              width: 810px;
+              margin: 10px 5px;
+              padding: 4px;
+            }     
+            .country {
+              font-weight: bold;
+            }     
+          </style>
+</head>   
+        <body>
+            <p style="font-size: 20px; color: rgb(0, 0, 0); font-family: 'fantasy' margin: 5px;">
+                <b>♣테마: </b>
+                <select id="thema" name="thema">
+                    <option value="힐링">힐링</option>
+                    <option value="맛집탐방">맛집탐방</option>
+                    <option value="드라이브">드라이브</option>
+                    <option value="카페">카페</option>
+                  </select></p>
+
+          <div class="searchBox">   
+            <label>검색: <input onkeyup="filter()" type="text" id="value" placeholder="검색어를 입력하세요.."></label>
+          </div>
+      
+          <style>
+            table {
+              width: 100%;
+              border: 1px solid #444444;
+            }
+            th, td {
+              border: 1px solid #444444;
+            }
+          </style>
+
+          <table>           
+            <tr>
+              <th>테마</th>
+              <th>위치</th>
+              <th>이름</th>
+              <th>명소가 된 이유</th>
+              <th>날짜</th>
+            </tr>
+            <tbody id="rows">
+                <tr>
+                  <th>테마</th>
+                  <th>위치</th>
+                  <th>이름</th>
+                  <th>명소가 된 이유</th>
+                  <th>날짜</th>
+                  </tr>
+            </tbody>
+          </table>
+          <div style="width:100%; text-align: right;">
+            <button type="button" text-align: right; onclick="location.href='개인수정 글작성본.html' ">글작성</button>
+            <button type="button" text-align: right; onclick="location.href='개인1.html' ">홈으로</button>
+          </div>
+          
+          </body>
+          <script>
+            
+            var contentList = JSON.parse(localStorage.getItem("contents"));
+          
+            drawRows();
+            function moveForm() {
+              location.href = 'form.html'
+            }
+          
+            function drawRows() {
+              var templates = '';
+              var body = document.getElementById('rows');
+          
+              for (var i=contentList.length-1; 0<=i; i--) {
+                var content  = contentList[i];
+                console.log(content);
+                templates += '<tr onclick="moveView('+i+')">';
+                templates += '<td style="text-align:center">'+content.thema+'</td>';
+                templates += '<td style="text-align:center">'+content.location+'</td>';
+                templates += '<td style="text-align:center">'+content.name+'</td>';
+                templates += '<td style="text-align:center">'+content.substance+'</td>';
+                templates += '<td style="text-align:center">'+toStringByFormatting(new Date(content.write_date))+'</td>';
+                templates += '</tr>';
+              }
+          
+              body.innerHTML = templates;
+            }
+          
+            function moveView(contentNo) {
+              location.href = '개인수정 글작성본.html?no='+(contentNo+1);
+            }
+          
+            function leftPad(value) { if (value >= 10) { return value; } return `0${value}`; } function toStringByFormatting(source, delimiter = '-') { const year = source.getFullYear(); const month = leftPad(source.getMonth() + 1); const day = leftPad(source.getDate()); return [year, month, day].join(delimiter); }
+          </script>
+          
+          <script>
+                function filter() {
+                  let search = document.getElementById("search").value.toLowerCase();
+                  let listInner = document.getElementsByClassName("listInner");
+                 
+                  for (let i = 0; i < listInner.length; i++) {
+                      name = listInner[i].getElementsByClassName("name");
+                      location = listInner[i].getElementsByClassName("location");
+                      if (name[0].innerHTML.toLowerCase().includes(search) ||
+                         location[0].innerHTML.toLowerCase().includes(search)
+                         ) {
+                          listInner[i].style.display = "flex"
+                      } else {
+                          listInner[i].style.display = "none"
+                      }
+                  }
+              }
+          </script>
+        </body>
+</html>
